@@ -37,8 +37,8 @@ your-project/
 ├── src/
 │   ├── CMakeLists.txt              # Your project's code
 │   └── main.cpp
-├── build.bat                       # Windows build script
-├── build.sh                        # Linux build script
+├── build_windows.bat                       # Windows build script
+├── build_linux.sh                          # Linux build script
 └── CMakeLists.txt                  # Main project file
 ```
 
@@ -48,11 +48,8 @@ your-project/
 
 ```bash
 # Clone this template
-git clone https://github.com/MaelGiese/OpenCV-CMake-Template.git my-project
+git clone https://github.com/MaelGiese/OpenCV-CMake-Template.git my-project --recursive
 cd my-project
-
-# Initialize submodules
-git submodule update --init --recursive
 ```
 
 ### Step 2: Build the Project
