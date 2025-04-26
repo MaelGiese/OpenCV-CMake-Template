@@ -5,17 +5,32 @@ project(opencv_template VERSION 1.0)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Set static runtime (/MT) for all targets
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+# Platform-specific settings
+if(WIN32)
+    # Set static runtime (/MT) for Windows
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+else()
+    # Linux settings
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
 
-# Set OpenCV build and install directories
-set(OPENCV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/opencv_install)
+# Define build phase (BUILD_DEPS or MAIN)
+set(BUILD_PHASE "BUILD_DEPS" CACHE STRING "Build phase: BUILD_DEPS or MAIN")
 
-# Set OpenCV_DIR to help find_package locate the built OpenCV
-set(OpenCV_DIR ${OPENCV_INSTALL_DIR}/x64/vc17/staticlib CACHE PATH "Path to OpenCVConfig.cmake")
+# Include the external libraries manager
+include(cmake/ExternalLibraries.cmake)
 
-# Find the built OpenCV package
-find_package(OpenCV REQUIRED)
+if(BUILD_PHASE STREQUAL "BUILD_DEPS")
+    # In phase 1, only build external dependencies
+    message(STATUS "Phase 1: Building external dependencies...")
+    # Nothing else to do - dependencies will be built via ExternalProject
+else()
+    # In phase 2, configure using the built dependencies
+    message(STATUS "Phase 2: Building main project...")
 
-# Add the source code directory
-add_subdirectory(src)
+    # Configure OpenCV
+    configure_opencv()
+    
+    # Add the source code directory
+    add_subdirectory(src)
+endif()
