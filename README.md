@@ -48,7 +48,7 @@ your-project/
 
 ```bash
 # Clone this template
-git clone https://github.com/username/cmake-external-template.git my-project
+git clone https://github.com/MaelGiese/OpenCV-CMake-Template.git my-project
 cd my-project
 
 # Initialize submodules
@@ -59,13 +59,13 @@ git submodule update --init --recursive
 
 #### On Windows:
 ```batch
-build.bat
+build_windows.bat
 ```
 
 #### On Linux:
 ```bash
 chmod +x build.sh
-./build.sh
+./build_linux.sh
 ```
 
 ### Step 3: Adding a New External Library
