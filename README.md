@@ -1,52 +1,26 @@
-﻿# Minimal OpenCV Template
-
-A minimal C++ project template that builds OpenCV from source and links it with your application.
-
-## Directory Structure
+﻿# Multi-Library C++ Project Template
 
 ```
-opencv_template/
-├── .gitmodules                 # Git submodule configuration
-├── CMakeLists.txt              # Main CMake configuration
-├── build.bat                   # Build script for Windows
-├── external/                   # External dependencies
-│   └── opencv/                 # OpenCV submodule
-└── src/                        # Source code
-    ├── CMakeLists.txt          # CMake configuration for src
-    └── main.cpp                # Sample application
+project_root/
+├── CMakeLists.txt              # Main project CMake file
+├── build.bat                   # Main build script
+├── cmake/                      # Helper CMake modules
+│   ├── BuildExternalLib.cmake  # Module to build external libraries
+│   └── ProjectSettings.cmake   # Global project settings
+├── external/                   # External dependencies (git submodules)
+│   ├── opencv/                 # OpenCV submodule
+│   ├── other_lib/              # Other library submodule
+│   └── ...                     # More libraries as needed
+├── src/                        # Application source code
+│   ├── CMakeLists.txt          # Application-specific CMake file
+│   └── main.cpp                # Main code
+└── .gitmodules                 # Git submodules configuration
 ```
 
-## Setup
+## How It Works
 
-1. Clone the repository:
-   ```
-   git clone <your-repo>
-   cd opencv_template
-   ```
-
-2. Initialize and update the OpenCV submodule:
-   ```
-   git submodule init
-   git submodule update
-   ```
-
-## Build
-
-Run the build script:
-
-```
-build.bat
-```
-
-This will:
-1. Create necessary build directories
-2. Build minimal OpenCV modules from source
-3. Build your sample application
-
-## Run
-
-After building, run the application:
-
-```
-.\build\src\Release\opencv_app.exe
-```
+1. Each external library is a git submodule in `external/`
+2. The `BuildExternalLib.cmake` module provides a function to build any CMake-based library
+3. The root `CMakeLists.txt` handles building all dependencies and then the application
+4. The `build.bat` script coordinates the entire build process
+5. `ProjectSettings.cmake` contains shared settings across all components
